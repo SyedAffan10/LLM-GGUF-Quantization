@@ -190,6 +190,56 @@ For a detailed walkthrough of the quantization process and to understand each st
 
 ---
 
+## Using Pre-quantized Models
+
+Don't want to quantize your own model? You can download and use pre-quantized models directly!
+
+### Qwen 3.5-2B GGUF Model
+
+A ready-to-use quantized version of Qwen 3.5-2B is available on Hugging Face:
+
+**Repository:** [SyedAffan/qwen3.5-2b-llm-gguf](https://huggingface.co/SyedAffan/qwen3.5-2b-llm-gguf)
+
+**Quick Download & Usage:**
+
+1. **Download the model:**
+   ```bash
+   # Install huggingface-hub if you haven't
+   pip install huggingface-hub
+   
+   # Download Q4_K_M variant (recommended)
+   huggingface-hub download SyedAffan/qwen3.5-2b-llm-gguf --repo-type model --local-dir ./models
+   ```
+
+2. **Run with llama.cpp:**
+   ```bash
+   # Build llama.cpp first
+   git clone https://github.com/ggml-org/llama.cpp
+   cd llama.cpp
+   mkdir build && cd build
+   cmake .. && cmake --build . --config Release
+   
+   # Run inference
+   ./bin/llama-cli -m ../models/Q4_K_M.gguf -n 128 -p "Your prompt here"
+   ```
+
+3. **Use with Python:**
+   ```python
+   from llama_cpp import Llama
+   
+   llm = Llama(model_path="./models/Q4_K_M.gguf")
+   response = llm("Your prompt here", max_tokens=128)
+   print(response)
+   ```
+
+**Advantages of pre-quantized models:**
+- ✅ No need to quantize yourself
+- ✅ Ready to use immediately
+- ✅ Tested and verified to work
+- ✅ Saves time and computational resources
+
+---
+
 ## Performance Benchmarks
 
 ### Speed Comparison (7B Qwen Model)
