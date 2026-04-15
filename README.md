@@ -203,28 +203,30 @@ A ready-to-use quantized version of Qwen 3.5-2B is available on Hugging Face:
 **Quick Download & Usage:**
 
 1. **Download the model:**
-   ```bash
+   ```python
    # Install huggingface-hub if you haven't
    pip install huggingface-hub
    
-   # Download Q4_K_M variant (recommended)
-   huggingface-hub download SyedAffan/qwen3.5-2b-llm-gguf --repo-type model --local-dir ./models
+   from huggingface_hub import snapshot_download
+   snapshot_download(repo_id="SyedAffan/qwen3.5-2b-llm-gguf", local_dir="./models", repo_type="model")
    ```
 
 2. **Run with llama.cpp:**
    ```bash
    # Build llama.cpp first
    git clone https://github.com/ggml-org/llama.cpp
-   cd llama.cpp
-   mkdir build && cd build
-   cmake .. && cmake --build . --config Release
+
+   cd llama.cpp && mkdir -p build && cd build && cmake .. && cmake --build . --config Release
    
    # Run inference
-   ./bin/llama-cli -m ../models/Q4_K_M.gguf -n 128 -p "Your prompt here"
+   /content/llama.cpp/build/bin/llama-cli -m /content/models/Q4_K_M.gguf -n 90 -p "Your prompt here"
    ```
 
 3. **Use with Python:**
    ```python
+   # Install llama-cpp-python if you haven't
+   pip install llama-cpp-python
+
    from llama_cpp import Llama
    
    llm = Llama(model_path="./models/Q4_K_M.gguf")
